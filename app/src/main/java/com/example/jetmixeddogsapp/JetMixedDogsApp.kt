@@ -112,19 +112,3 @@ fun JetMixedDogsAppPreview() {
         JetMixedDogsApp()
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun MixedDogsListItemPreview() {
-//    JetMixedDogsAppTheme {
-//        val data = MixedDogs("", "", "", "", "")
-//        MixedDogsListItem(
-//            id = "",
-//            name = "Pomapoo",
-//            photoUrl = "",
-//            description = "Anjing ras campuran dengan induk pudel dan Pomeranian, sangat ramah, suka bermain, dan suka menjadi pusat perhatian.",
-//            lifeSpan = "",
-//            navigateToDetail = data
-//        )
-//    }
-//}
