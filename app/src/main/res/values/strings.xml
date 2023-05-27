@@ -1,12 +1,13 @@
 <resources>
-    <string name="app_name">JetMixedDogsApp</string>
+    <string name="app_name">Know Your Mixed Dogs</string>
     <string name="scroll_to_top">Scroll to Top</string>
     <string name="search_dogs">Search Dogs</string>
     <string name="menu_home">Home</string>
     <string name="menu_about">About</string>
-    <string name="home_page">Home Page</string>
-    <string name="about_page">About Page</string>
+    <string name="home_page">home_page</string>
+    <string name="about_page">about_page</string>
     <string name="about_me">About Me</string>
+    <string name="description">Description: \n</string>
     <string name="full_name">Cindy Deviana Atmakusuma</string>
     <string name="email_address">cnddeviana@gmail.com</string>
 </resources>

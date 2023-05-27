@@ -13,4 +13,10 @@ class MixedDogsRepository {
             it.name.contains(query, ignoreCase = true)
         }
     }
+
+    fun getDogById(query: String): MixedDogs?{
+        return MixedDogsData.mixedDogs.firstOrNull{
+            it.id == query
+        }
+    }
 }

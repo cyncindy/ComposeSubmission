@@ -31,7 +31,6 @@ import coil.compose.AsyncImage
 import com.example.jetmixeddogsapp.*
 import com.example.jetmixeddogsapp.R
 import com.example.jetmixeddogsapp.data.MixedDogsRepository
-import com.example.jetmixeddogsapp.model.MixedDogs
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -41,7 +40,7 @@ fun HomeScreen(
     viewModel: JetMixedDogsViewModel = viewModel(
         factory = ViewModelFactory(MixedDogsRepository())
     ),
-    navigateToDetail: (MixedDogs) -> Unit,
+    navigateToDetail: (String) -> Unit,
 ) {
     val groupedMixedDogs by viewModel.groupedMixedDogs.collectAsState()
     val query by viewModel.query
@@ -73,7 +72,6 @@ fun HomeScreen(
                         name = dogs.name,
                         photoUrl = dogs.photoUrl,
                         description = dogs.description,
-                        lifeSpan = dogs.lifeSpan,
                         modifier = Modifier
                             .fillMaxWidth()
                             .animateItemPlacement(tween(durationMillis = 100)),
@@ -107,46 +105,48 @@ fun MixedDogsListItem(
     name: String,
     photoUrl: String,
     description: String,
-    lifeSpan: String,
     modifier: Modifier = Modifier,
-    navigateToDetail: (MixedDogs) -> Unit,
+    navigateToDetail: (String) -> Unit,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable {
-            val data = MixedDogs(
-                id, name, photoUrl, description, lifeSpan
-            )
-            navigateToDetail(data)
-        }
-    ) {
-        AsyncImage(
-            model = photoUrl,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .padding(16.dp)
-                .size(120.dp)
-                .clip(CircleShape)
-        )
-        Column(
-            modifier = modifier
+    Card(
+        backgroundColor = Color.White,
+        shape = MaterialTheme.shapes.medium,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 4.dp)
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier.clickable {
+                navigateToDetail(id)
+            }
         ) {
-            Text(
-                text = name,
-                fontWeight = FontWeight.Bold,
+            AsyncImage(
+                model = photoUrl,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(16.dp)
+                    .size(120.dp)
+                    .clip(CircleShape)
             )
-            Text(
-                text = description,
-                fontWeight = FontWeight.Light,
-                maxLines = 3,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
+            Column(
+                modifier = modifier
+            ) {
+                Text(
+                    text = name,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                )
+                Text(
+                    text = description,
+                    fontWeight = FontWeight.Light,
+                    maxLines = 3,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                )
+            }
         }
     }
 }

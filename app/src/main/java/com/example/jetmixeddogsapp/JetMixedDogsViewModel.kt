@@ -26,10 +26,17 @@ class JetMixedDogsViewModel(private val repository: MixedDogsRepository) : ViewM
             .sortedBy { it.name }
             .groupBy { it.name[0] }
     }
+
+    private val _detailDog = MutableStateFlow<MixedDogs?>(null)
+    val detailDog: StateFlow<MixedDogs?> get() = _detailDog
+    fun searchByID(idQuery: String){
+        _detailDog.value = repository.getDogById(idQuery)
+    }
 }
 
+
 class ViewModelFactory(private val repository: MixedDogsRepository) :
-        ViewModelProvider.NewInstanceFactory() {
+    ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -12,17 +12,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
 import com.example.jetmixeddogsapp.navigation.NavigationItems
 import com.example.jetmixeddogsapp.navigation.Screen
 import com.example.jetmixeddogsapp.ui.home.HomeScreen
-import com.example.jetmixeddogsapp.ui.home.MixedDogsListItem
 import com.example.jetmixeddogsapp.ui.theme.JetMixedDogsAppTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.jetmixeddogsapp.model.MixedDogs
+import androidx.navigation.navArgument
 import com.example.jetmixeddogsapp.ui.about.AboutScreen
+import com.example.jetmixeddogsapp.ui.detail.DetailScreen
 
 @Composable
 fun JetMixedDogsApp(
@@ -38,7 +39,7 @@ fun JetMixedDogsApp(
             }
         },
         modifier = modifier
-    ) {
+    ) { it ->
         NavHost(
             navController = navController,
             startDestination = Screen.Home.route,
@@ -46,12 +47,24 @@ fun JetMixedDogsApp(
         ) {
             composable(Screen.Home.route) {
                 HomeScreen(navigateToDetail = { data ->
-                    navController.navigate(Screen.DetailMixedDogs.createRoute(data))
-                }
+                    navController.navigate(Screen.DetailMixedDogs.createRoute(data)) }
                 )
             }
             composable(Screen.About.route) {
                 AboutScreen()
+            }
+            composable(
+                route = Screen.DetailMixedDogs.route,
+                arguments = listOf(
+                    navArgument("dogId"){
+                        type = NavType.StringType
+                    }
+                )
+            ){
+                val id = it.arguments?.getString("dogId") ?: ""
+                DetailScreen(
+                    dogId = id,
+                )
             }
         }
     }
@@ -85,7 +98,7 @@ private fun BottomBar(
                     icon = {
                         Icon(
                             imageVector = item.icon,
-                            contentDescription = item.title
+                            contentDescription = item.contentDescription
                         )
                     },
                     label = { Text(item.title) },
